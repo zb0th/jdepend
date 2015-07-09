@@ -10,7 +10,7 @@
   <property environment="env"/>
 
   <property name="Name" value="${ant.project.name}"/>
-  <property name="version" value="2.9.1"/>
+  <property name="version" value="2.9.1-java8"/>
 
   <property name="src.dir" location="src"/>
   <property name="test.dir" location="test"/>
@@ -32,8 +32,6 @@
   <target name="prepare">
     <tstamp />
     <mkdir dir="${build.dir}"/>
-    <available property="junit.available"
-               classname="junit.framework.TestCase"/>
   </target>
 
   <target name="compile" depends="prepare"
@@ -112,8 +110,8 @@
           if="jdependtask.available"
           depends="validate-jdepend-task, compile"
           description="Runs the JDepend Ant task">
-            
-    <jdepend fork="yes" 
+
+    <jdepend fork="yes"
              outputfile="${docs.dir}/jdepend-report.txt">
       <exclude name="java.*"/>
       <exclude name="javax.*"/>
@@ -167,9 +165,9 @@
 
   <target name="javadoc" depends="compile"
           description="Generates JavaDoc">
-    
+
     <mkdir dir="${javadoc.dir}"/>
-    
+
     <javadoc packagenames="*"
              sourcepath="${src.dir}"
              destdir="${javadoc.dir}"
@@ -185,9 +183,9 @@
 
   <target name="jar" depends="compile"
           description="Creates a JAR file">
-    
+
     <mkdir dir="${dist.dir}"/>
-    
+
     <jar destfile="${dist.dir}/${dist.name}.jar"
          basedir="${build.dir}" />
 
@@ -205,31 +203,31 @@
         <include name="LICENSE"/>
       </fileset>
     </copy>
-    
+
     <copy todir="${package.dir}/docs">
       <fileset dir="${docs.dir}"/>
     </copy>
-    
+
     <copy todir="${package.dir}/src">
       <fileset dir="${src.dir}"/>
     </copy>
-    
+
     <copy todir="${package.dir}/test">
       <fileset dir="${test.dir}"/>
-    </copy>  
-    
+    </copy>
+
     <copy todir="${package.dir}/sample">
       <fileset dir="sample"/>
     </copy>
-    
+
     <copy todir="${package.dir}/contrib">
       <fileset dir="contrib">
         <include name="jdepend2dot.sh"/>
         <include name="jdepend2dot.xsl"/>
         <include name="**/fitnesse/*"/>
       </fileset>
-    </copy> 
-    
+    </copy>
+
     <copy todir="${package.dir}/lib"
           file="${dist.dir}/${dist.name}.jar"/>
 
@@ -241,10 +239,10 @@
     <zip destfile="${dist.dir}/${dist.name}.zip"
          basedir="${dist.dir}/"
          includes="${dist.name}/**" />
-    
-  </target> 
 
-  <target name="clean" 
+  </target>
+
+  <target name="clean"
           description="Deletes all build artifacts">
     <delete dir="${build.dir}"/>
     <delete dir="${dist.dir}"/>
